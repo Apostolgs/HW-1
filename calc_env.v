@@ -34,8 +34,18 @@ module calc_env (
     wire not_d_xor_r;
     wire l_and_not_d_xor_r;
 
-
+    and(nl_and_r, not_btnl, btnr);
+    xor(d_xor_r, btnr, btnd);
+    not(not_d_xor_r, d_xor_r);
+    and(l_and_not_d_xor_r, not_d_xor_r, btnl);
+    or(alu_op[2], l_and_not_d_xor_r, nl_and_r);
     //-----------------------//
 
+    //------------alu_op[2]-------------//
+    wire l_and_d;
+
+    and(l_and_d, btnl, btnr);
+    or(alu_op[3], l_and_d, l_and_r);
+    //-----------------------//
     
 endmodule

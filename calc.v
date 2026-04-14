@@ -22,8 +22,15 @@ module calc (
     assign op1 = {{16{accumulator[15]}}, accumulator};
     assign op2 = {{16{sw[15]}}, sw};
 
+    // alu_op control
+    calc_enc enc_inst (
+        .btnl(btnl),
+        .btnr(btnr),
+        .btnd(btnd),
+        .alu_op(alu_op)
+    );
 
-
+    // ALU
     alu ALU(
         .op1(op1),
         .op2(op2),
@@ -33,6 +40,7 @@ module calc (
         .ovf(ovf)
         );
 
+    // Accumulator
     always @(posedge clk) begin
         if(btnac) 
             accumulator <= 16'b0; // synchronous reset
@@ -40,6 +48,9 @@ module calc (
             accumulator <= result[15:0]; 
     end
 
+    //output
     assign led = accumulator;
+
+
 
 endmodule
