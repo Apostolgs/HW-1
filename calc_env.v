@@ -41,10 +41,10 @@ module calc_env (
     or(alu_op[2], l_and_not_d_xor_r, nl_and_r);
     //-----------------------//
 
-    //------------alu_op[2]-------------//
+    //------------alu_op[3]-------------//
     wire l_and_d;
 
-    and(l_and_d, btnl, btnr);
+    and(l_and_d, btnl, btnd);
     or(alu_op[3], l_and_d, l_and_r);
     //-----------------------//
     

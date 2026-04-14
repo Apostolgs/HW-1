@@ -1,10 +1,10 @@
 module alu (
-    input reg [31:0] op1, // operator 1 in 2's complement
-    input reg [31:0] op2, // operator 2 in 2's complement
-    input reg [3:0] alu_op, 
-    output wire zero, // result == 0 flag
-    output reg [31:0] result, 
-    output reg ovf // result overflows IF alu_op is add sub or mult
+    input [31:0] op1, // operator 1 in 2's complement
+    input [31:0] op2, // operator 2 in 2's complement
+    input [3:0] alu_op, 
+    output zero, // result == 0 flag
+    output [31:0] result, 
+    output ovf // result overflows IF alu_op is add sub or mult
 );
     // LOGIC OPERATIONS
     parameter [3:0] ALUOP_AND = 4'b1000;
@@ -45,19 +45,19 @@ module alu (
                 result = op1 ^ op2;
             end
             ALUOP_LOGIC_RIGHT : begin 
-                result = op1 >> op2;
+                result = op1 >> op2[4:0];
             end
             ALUOP_LOGIC_LEFT : begin
-                result = op1 << op2; 
+                result = op1 << op2[4:0]; 
             end
             // arithmetic op
             ALUOP_ADD : begin 
                 result = op1 + op2;
-                ovf = (op1[31] == op2[31]) && (result != op1[31]);
+                ovf = (op1[31] == op2[31]) && (result[31] != op1[31]);
             end
             ALUOP_SUB : begin 
                 result = op1 - op2;
-                ovf = (op1[31] != op2[31]) && (result != op1[31]);
+                ovf = (op1[31] != op2[31]) && (result[31] != op1[31]);
             end
             ALUOP_MULT : begin 
                 reg [63:0] mult_result;

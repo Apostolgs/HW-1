@@ -1,3 +1,6 @@
+`include "alu.v"
+`include "calc_env.v"
+
 module calc (
     input reg clk,
     input reg btnc, // button central
@@ -9,12 +12,12 @@ module calc (
     output [15:0] led // accumulator led 
 );
 
-    wire [31:0] op1, // operator 1 in 2's complement
-    wire [31:0] op2, // operator 2 in 2's complement
-    wire [3:0] alu_op, 
-    wire zero, // result == 0 flag
-    wire [31:0] result, 
-    wire ovf // result overflows IF alu_op is add sub or mult
+    wire [31:0] op1; // operator 1 in 2's complement
+    wire [31:0] op2; // operator 2 in 2's complement
+    wire [3:0] alu_op; 
+    wire zero; // result == 0 flag
+    wire [31:0] result; 
+    wire ovf; // result overflows IF alu_op is add sub or mult
 
     reg [15:0] accumulator;
 
@@ -23,7 +26,7 @@ module calc (
     assign op2 = {{16{sw[15]}}, sw};
 
     // alu_op control
-    calc_enc enc_inst (
+    calc_env enc_inst (
         .btnl(btnl),
         .btnr(btnr),
         .btnd(btnd),
