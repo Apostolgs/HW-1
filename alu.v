@@ -36,7 +36,7 @@ module alu (
                 result = op1 | op2;
             end
             ALUOP_NOR : begin 
-                result = ~(op1 ^ op2);
+                result = ~(op1 | op2);
             end
             ALUOP_NAND : begin 
                 result = ~(op1 & op2);
