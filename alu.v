@@ -7,19 +7,19 @@ module alu (
     output reg ovf // result overflows IF alu_op is add sub or mult
 );
     // LOGIC OPERATIONS
-    parameter [3:0] ALUOP_AND = 4'b1000;
-    parameter [3:0] ALUOP_OR = 4'b1001;
-    parameter [3:0] ALUOP_NOR = 4'b1010;
-    parameter [3:0] ALUOP_NAND = 4'b1011;
-    parameter [3:0] ALUOP_XOR = 4'b1100;
-    parameter [3:0] ALUOP_LOGIC_RIGHT = 4'b0000;
-    parameter [3:0] ALUOP_LOGIC_LEFT = 4'b0001;
+    localparam [3:0] ALUOP_AND = 4'b1000;
+    localparam [3:0] ALUOP_OR = 4'b1001;
+    localparam [3:0] ALUOP_NOR = 4'b1010;
+    localparam [3:0] ALUOP_NAND = 4'b1011;
+    localparam [3:0] ALUOP_XOR = 4'b1100;
+    localparam [3:0] ALUOP_LOGIC_RIGHT = 4'b0000;
+    localparam [3:0] ALUOP_LOGIC_LEFT = 4'b0001;
     // ARITHMETIC OPERATIONS
-    parameter [3:0] ALUOP_ADD = 4'b0100;
-    parameter [3:0] ALUOP_SUB = 4'b0101;
-    parameter [3:0] ALUOP_MULT = 4'b0110;
-    parameter [3:0] ALUOP_AR_RIGHT = 4'b0010;
-    parameter [3:0] ALUOP_AR_LEFT = 4'b0011;
+    localparam [3:0] ALUOP_ADD = 4'b0100;
+    localparam [3:0] ALUOP_SUB = 4'b0101;
+    localparam [3:0] ALUOP_MULT = 4'b0110;
+    localparam [3:0] ALUOP_AR_RIGHT = 4'b0010;
+    localparam [3:0] ALUOP_AR_LEFT = 4'b0011;
 
 
     assign zero = (result == 0) ? 1'b1 : 1'b0; 
