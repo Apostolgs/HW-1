@@ -20,7 +20,8 @@ module alu (
     localparam [3:0] ALUOP_MULT = 4'b0110;
     localparam [3:0] ALUOP_AR_RIGHT = 4'b0010;
     localparam [3:0] ALUOP_AR_LEFT = 4'b0011;
-
+    
+    reg [63:0] mult_result;
 
     assign zero = (result == 0) ? 1'b1 : 1'b0; 
 
@@ -60,7 +61,6 @@ module alu (
                 ovf = (op1[31] != op2[31]) && (result[31] != op1[31]);
             end
             ALUOP_MULT : begin 
-                reg [63:0] mult_result;
                 mult_result = $signed(op1) * $signed(op2);
                 result = mult_result[31:0];
                 ovf = (mult_result[63:32] != {32{mult_result[31]}});

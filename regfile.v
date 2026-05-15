@@ -10,10 +10,10 @@ module regfile #(parameter DATAWIDTH = 32) (
     input [DATAWIDTH-1:0] writeData1,
     input [DATAWIDTH-1:0] writeData2,
     input write,
-    output reg [DATAWIDTH-1:0] readData1,
-    output reg [DATAWIDTH-1:0] readData2,
-    output reg [DATAWIDTH-1:0] readData3,
-    output reg [DATAWIDTH-1:0] readData4
+    output [DATAWIDTH-1:0] readData1,
+    output [DATAWIDTH-1:0] readData2,
+    output [DATAWIDTH-1:0] readData3,
+    output [DATAWIDTH-1:0] readData4
 );
 
     reg [DATAWIDTH-1:0] registers [15:0]; // 16 registers of DATAWIDTH bits
@@ -29,7 +29,7 @@ module regfile #(parameter DATAWIDTH = 32) (
             if(write) begin
                 registers[writeReg1] <= writeData1; // writeData1 has priority over writeData2  
                 if(writeReg1 != writeReg2) begin // if different write addresses then writeData2
-                    registers[writeReg2] <= writeData2
+                    registers[writeReg2] <= writeData2;
                 end
             end
         end
