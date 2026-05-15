@@ -17,6 +17,18 @@ module nn(
     localparam [3:0] ALUOP_AR_RIGHT = 4'b0010;
     wire overflow_detected;
 
+    reg [31:0] inter_1, inter_2;
+    reg [31:0] inter_3, inter_4;
+    reg [31:0] inter_5;
+
+    reg [31:0] final_output_reg;
+
+    reg total_ovf_reg;
+    reg total_zero_reg;
+
+    reg [2:0] ovf_stage_reg;
+    reg [2:0] zero_stage_reg;
+
 
     // module instantiations
     // regfile stores biases weights and intermediate results if needed
@@ -160,5 +172,65 @@ module nn(
             end
         endcase
     end
+
+    // output
+    always @(posedge clk or negedge resetn) begin
+        if (~resetn) begin
+            inter_1 <= 0;
+            inter_2 <= 0;
+            inter_3 <= 0;
+            inter_4 <= 0;
+            inter_5 <= 0;
+
+            final_output_reg <= 0;
+
+            total_ovf_reg <= 0;
+            total_zero_reg <= 0;
+
+            ovf_stage_reg <= 3'b111;
+            zero_stage_reg <= 3'b111;
+        end
+        else begin
+            case(current_state)
+
+                LOADING: begin
+                    total_ovf_reg <= 0;
+                    total_zero_reg <= 0;
+                    ovf_stage_reg <= 3'b111;
+                    zero_stage_reg <= 3'b111;
+                end
+
+                PREPROCESSING: begin
+                    // placeholders for now (you will connect ALU outputs later)
+                    inter_1 <= inter_1;
+                    inter_2 <= inter_2;
+                end
+
+                INPUT: begin
+                    inter_3 <= inter_3;
+                    inter_4 <= inter_4;
+                end
+
+                OUTPUT: begin
+                    inter_5 <= inter_5;
+                end
+
+                POSTPROCESSING: begin
+                    final_output_reg <= inter_5;
+                end
+
+                default: begin
+                    // do nothing
+                end
+
+            endcase
+        end
+    end
+
+    assign final_output = total_ovf_reg ? 32'h7FFFFFFF : final_output_reg;
+    assign total_ovf = total_ovf_reg;
+    assign total_zero = total_zero_reg;
+    assign ovf_fms_stage = ovf_stage_reg;
+    assign zero_fsm_stage = zero_stage_reg;
 
 endmodule
